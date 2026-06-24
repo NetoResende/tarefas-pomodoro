@@ -1,0 +1,21 @@
+import styles from './styles.module.css'
+
+export function Cycles(){
+    return (
+        <div className={styles.cycle}>
+            <span>Ciclos:</span>
+
+            <div className={styles.cycleDots}>
+                <span className={`${styles.cycleDot} ${styles.workTime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.shortBreaktime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.workTime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.shortBreaktime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.workTime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.shortBreaktime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.workTime}`}></span>
+                <span className={`${styles.cycleDot} ${styles.longBreakTime}`}></span>
+                
+            </div>
+        </div>
+    )
+}
