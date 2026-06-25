@@ -9,6 +9,7 @@ import { PlayCircleIcon } from "lucide-react";
 import { Footer } from "./components/Footer";
 import "./styles/Theme.css";
 import "./styles/Global.css";
+import { Heading } from "./components/Heading";
 
 
 
