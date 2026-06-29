@@ -7,25 +7,15 @@ import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 export function MainForm() {
   const { state, setState }= useTaskContext()
 
-  //  ex:1 função para modificar o lcoutDown e o formulário
-  function handlerClicar(){
-    setState(prevState => {
-      return {
-        ...prevState, 
-        formattedSecondsTemaining: "21:00",
-        config: {
-          ...prevState.config,
-          workTime: 15,
-        }
-      }
-    })
+  // função para envia o formulário para dentro do estado!
+  function handlerStateNewTask(event: React.SubmitEvent<HTMLFormElement>){
+    event.preventDefault()
+    console.log("DEU CERTO");
   }
 
   return (
-    <form className="form">
-      <div>
-        <button onClick={handlerClicar} type="button">Clicar</button>
-      </div>
+    <form onSubmit={handlerStateNewTask} className="form">
+      
       <div className="formRow">
         <DefaultInput
           id="meuInput"
