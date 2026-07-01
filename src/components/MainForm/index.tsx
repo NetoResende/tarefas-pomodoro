@@ -6,12 +6,14 @@ import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycles } from "../../utils/getNextCycles";
+import { getNextCycleType } from "../../utils/getNextCycleType";
 
 export function MainForm() {
   const { state,setState } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null) // estado não controlado!
 
   const nextCycle = getNextCycles(state.currentCycle)
+  const NextCycleType = getNextCycleType(nextCycle)
 
   // função para envia o formulário para dentro do estado!
   function handlerStateNewTask(event: React.SubmitEvent<HTMLFormElement>){
@@ -20,7 +22,7 @@ export function MainForm() {
 
     const taskName = taskNameInput.current.value.trim();
     if(!taskName) 
-      alert("Digite algo")
+      alert("Digite uma nova tarefa")
 
     const newTask: TaskModel = {
       id: Date.now().toString(),
@@ -29,7 +31,7 @@ export function MainForm() {
       completeDate: null,
       interruptDate: null,
       duration: 1,
-      type: 'workTime',
+      type: NextCycleType,
     }
     const secondsRemaining = newTask.duration * 60;
 
