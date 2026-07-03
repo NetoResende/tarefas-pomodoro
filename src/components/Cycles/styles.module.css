@@ -22,7 +22,7 @@
 .workTime {
     background: var(--warning);
 }
-.shortBreaktime {
+.shortBreakTime {
     background: var(--primary);
 }
 .longBreakTime {

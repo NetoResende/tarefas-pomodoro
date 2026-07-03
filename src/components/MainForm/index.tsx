@@ -10,20 +10,19 @@ import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 
 export function MainForm() {
-  const { state,setState } = useTaskContext();
-  const taskNameInput = useRef<HTMLInputElement>(null) // estado não controlado!
+  const { state, setState } = useTaskContext();
+  const taskNameInput = useRef<HTMLInputElement>(null); // estado não controlado!
 
-  const nextCycle = getNextCycles(state.currentCycle)
-  const NextCycleType = getNextCycleType(nextCycle)
+  const nextCycle = getNextCycles(state.currentCycle);
+  const NextCycleType = getNextCycleType(nextCycle);
 
   // função para envia o formulário para dentro do estado!
-  function handlerStateNewTask(event: React.SubmitEvent<HTMLFormElement>){
-    event.preventDefault()
-    if(taskNameInput.current === null) return;
+  function handlerStateNewTask(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
-    if(!taskName) 
-      alert("Digite uma nova tarefa")
+    if (!taskName) alert("Digite uma nova tarefa");
 
     const newTask: TaskModel = {
       id: Date.now().toString(),
@@ -33,25 +32,24 @@ export function MainForm() {
       interruptDate: null,
       duration: state.config[NextCycleType],
       type: NextCycleType,
-    }
+    };
     const secondsRemaining = newTask.duration * 60;
 
-    setState(prevState => {
+    setState((prevState) => {
       return {
         ...prevState,
-        config: {...prevState.config},
+        config: { ...prevState.config },
         activeTask: newTask,
         currentCycle: nextCycle,
         secondsRemaining: secondsRemaining,
         formattedSecondsTemaining: formatSecondsToMinutes(secondsRemaining),
-        tasks: [...prevState.tasks, newTask]
-      }
-    })
+        tasks: [...prevState.tasks, newTask],
+      };
+    });
   }
 
   return (
     <form onSubmit={handlerStateNewTask} className="form">
-      
       <div className="formRow">
         <DefaultInput
           id="meuInput"
@@ -64,9 +62,11 @@ export function MainForm() {
       <div className="formRow">
         <p>O próximo intervalo vai ser de 25min</p>
       </div>
-      <div className="formRow">
-        <Cycles />
-      </div>
+      {state.currentCycle > 0 && (
+        <div className="formRow">
+          <Cycles />
+        </div>
+      )}
       <div className="formRow">
         <DefaultButton icon={<PlayCircleIcon />} />
       </div>
