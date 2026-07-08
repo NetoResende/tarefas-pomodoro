@@ -3,10 +3,11 @@ import { initialTaskState } from "./initialTaskState";
 import { TaskContext } from "./TaskContext";
 
 type TaskContextProviderProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
+
 //  criando um componente provider, para prover o contexto
-export function TaskContextProvider({children}: TaskContextProviderProps){
+export function TaskContextProvider({ children }: TaskContextProviderProps) {
   const [state, setState] = useState(initialTaskState);
 
   useEffect(()=> console.log(state), [state])
@@ -15,5 +16,5 @@ export function TaskContextProvider({children}: TaskContextProviderProps){
     <TaskContext.Provider value={{ state, setState }}>
       {children}
     </TaskContext.Provider>
-  )
+  );
 }
