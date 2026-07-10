@@ -8,6 +8,7 @@ import { getNextCycleType } from "../../utils/getNextCycleType";
 import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskactions";
+import { Tips } from "../Tips";
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -40,7 +41,8 @@ export function MainForm() {
     dispatch({type: TaskActionTypes.START_TASK, payload: newTask});
   }
 
-  function handlerInterruptTask(){ dispatch({type: TaskActionTypes.INTERRUPT_TASK})
+  function handlerInterruptTask(){ 
+    dispatch({type: TaskActionTypes.INTERRUPT_TASK})
   }
 
   return (
@@ -57,7 +59,7 @@ export function MainForm() {
       </div>
 
       <div className="formRow">
-        <p>O próximo intervalo vai ser de 25min</p>
+        <Tips/>
       </div>
       {state.currentCycle > 0 && (
         <div className="formRow">
