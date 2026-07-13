@@ -9,6 +9,7 @@ import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskactions";
 import { Tips } from "../Tips";
+import { TimerWorkerManager } from "../../workers/TimerWorkerManager";
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -39,6 +40,20 @@ export function MainForm() {
     };
   
     dispatch({type: TaskActionTypes.START_TASK, payload: newTask});
+
+    const worker = TimerWorkerManager.getInstance();
+
+    worker.postMessage("OLA_WORKER")
+    worker.postMessage("FALA_OI")
+    worker.postMessage("BLA BLA BLA")
+    worker.postMessage("FECHA_WORKER")
+
+    worker.onmessage(event => {
+      console.log("PRINCIPAL recebeu: ", event.data);
+      worker.terimante()
+    })
+
+    // worker.onmessage = function(event){ return console.log("PRINCIPAL recebeu: ",event.data)}
   }
 
   function handlerInterruptTask(){ 
