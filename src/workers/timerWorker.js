@@ -1,22 +1,24 @@
-self.onmessage = function (event) {
-    console.log("WORKER recebeu: ", event.data);
+let isRunning= false;
 
-    switch(event.data){
-        case "OLA_WORKER": {
-            self.postMessage("olá pra você também Principal!")
-            break;
-        }
-        case "FALA_OI": {
-            self.postMessage("Oi!")
-            break;
-        }
-        case "FECHA_WORKER": {
-            self.postMessage("Ta bom vou fechar!")
-            self.close()
-            break;
-        }
-        default: {
-            self.postMessage("Não entendi, pode repetir novamente!")
-        }
+self.onmessage = function(event ) {
+    if (isRunning) return;
+    isRunning = true;
+
+    const { activeTask, secondsRemaining } = event.data;
+    if (!activeTask) {
+        isRunning = false;
+        return;
     }
-}
+
+    const endDate = activeTask.startDate + secondsRemaining * 1000;
+    const now = Date.now();
+    let countDownSeconds = Math.ceil((endDate - now) / 1000);
+    function tick() {
+        self.postMessage(countDownSeconds);
+
+        const now = Date.now();
+        countDownSeconds = Math.floor((endDate - now) / 1000);
+        setTimeout(tick, 1000)
+    }
+    tick()
+}   
