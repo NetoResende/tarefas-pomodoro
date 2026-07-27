@@ -9,6 +9,7 @@ import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskactions";
 import { Tips } from "../Tips";
+import { showMessage } from "../../adapters/showMessage";
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -17,15 +18,16 @@ export function MainForm() {
   const nextCycle = getNextCycles(state.currentCycle);
   const NextCycleType = getNextCycleType(nextCycle);
    
-
   // função para envia o formulário para dentro do estado!
   function handlerStateNewTask(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    showMessage.dismiss()
     if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
     if (!taskName) {
-      alert("Digite uma nova tarefa")
+      showMessage.warn("Digite uma nova tarefa!")
       return;
     };
 
@@ -40,11 +42,14 @@ export function MainForm() {
     };
   
     dispatch({type: TaskActionTypes.START_TASK, payload: newTask});
+    showMessage.success("Tarefa iniciada!")
   }
 
 
   function handlerInterruptTask(){ 
-      dispatch({type: TaskActionTypes.INTERRUPT_TASK})
+    showMessage.dismiss()
+    showMessage.error("Tarefa Interrompida!")
+    dispatch({type: TaskActionTypes.INTERRUPT_TASK})
   }
 
   return (
