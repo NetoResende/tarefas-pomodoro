@@ -14,9 +14,10 @@ import { showMessage } from "../../adapters/showMessage";
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null); // estado não controlado!
-
+  
   const nextCycle = getNextCycles(state.currentCycle);
   const NextCycleType = getNextCycleType(nextCycle);
+  const lastTaskName = "";
    
   // função para envia o formulário para dentro do estado!
   function handlerStateNewTask(event: React.SubmitEvent<HTMLFormElement>) {
@@ -45,7 +46,6 @@ export function MainForm() {
     showMessage.success("Tarefa iniciada!")
   }
 
-
   function handlerInterruptTask(){ 
     showMessage.dismiss()
     showMessage.error("Tarefa Interrompida!")
@@ -62,6 +62,7 @@ export function MainForm() {
           placeholder="Digite alguma coisa"
           ref={taskNameInput}
           disabled={!!state.activeTask}
+          defaultValue={lastTaskName}
         />
       </div>
 

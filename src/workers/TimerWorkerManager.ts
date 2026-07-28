@@ -1,16 +1,23 @@
 import type { TaskStateModel } from "../models/TaskStateModel";
 
 let instance: TimerWorkerManager | null = null;
+
 export class TimerWorkerManager {
     private worker: Worker;
+    private currentCallback: ((e: MessageEvent) => void) | null = null;
 
-    
-    // Um construtor para criar os workers
     private constructor(){
-        this.worker = new Worker(new URL("./timerWorker.js", import.meta.url));
+        this.worker = this.createWorker();
     }
 
-    // função para gerenciar as instancias
+    private createWorker(): Worker {
+        const worker = new Worker(new URL("./timerWorker.js", import.meta.url));
+        if (this.currentCallback) {
+            worker.onmessage = this.currentCallback;
+        }
+        return worker;
+    }
+
     static getInstance(){
         if (!instance) {
             instance = new TimerWorkerManager();
@@ -19,14 +26,16 @@ export class TimerWorkerManager {
     }
 
     postMessage(message: TaskStateModel){
-        this.worker.postMessage(message,)
+        this.worker.postMessage(message);
     }
-    onmessage(cb: (e: MessageEvent)=>void) { 
+
+    onmessage(cb: (e: MessageEvent)=>void) {
+        this.currentCallback = cb;
         this.worker.onmessage = cb;
     }
 
     terminate(){
         this.worker.terminate();
-        instance = null;
+        this.worker = this.createWorker(); // recria já com o listener re-anexado
     }
-}       
+}
