@@ -7,7 +7,7 @@ import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { formatDate } from "../../utils/formatDate";
 import { getTaskStatus } from "../../utils/getTaskStatus";
 import { sortTasks, type SortTasksOptions } from "../../utils/sortTasks";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { showMessage } from "../../adapters/showMessage";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskactions";
 import styls from "./styles.module.css";
@@ -32,6 +32,9 @@ export function History() {
     }),
     [state.tasks, sortTaskOptions.direction, sortTaskOptions.field]
   );
+   useEffect(()=>{
+      document.title="Histórico - Chronos Pomodoro";
+    },[])
 
   // useEffect(()=>{
   //   return ()=>{

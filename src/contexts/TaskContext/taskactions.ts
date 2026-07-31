@@ -8,9 +8,7 @@ export enum TaskActionTypes {
     COUNT_DOWN = 'COUNT_DOWN',
     COMPLETE_TASK = 'COMPLETE_TASK',
     CHANGE_SETTINGS = 'CHANGE_SETTINGS',
-
 }
-
 
 export type TaskActionsWitchPayload = | {
     type: TaskActionTypes.START_TASK;
@@ -26,7 +24,6 @@ export type TaskActionsWitchPayload = | {
 }
 
 
-
 export type TaskActionsWitoutchPayload = {
     type: TaskActionTypes.RESET_STATE;
 }
@@ -35,8 +32,7 @@ export type TaskActionsWitoutchPayload = {
 }
 | {
     type: TaskActionTypes.COMPLETE_TASK;
-}
-;
+};
 
     
 export type TaskActionModel = 
