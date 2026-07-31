@@ -52,7 +52,9 @@ export function taskReducer(state: TaskStateModel, action: TaskActionModel): Tas
         case TaskActionTypes.RESET_STATE: {
             return {...initialTaskState};
         }
-        
+        case TaskActionTypes.CHANGE_SETTINGS: {
+            return {...state, config: {...action.payload}};
+        }
         case TaskActionTypes.COUNT_DOWN: {
             return {
                 ...state,
