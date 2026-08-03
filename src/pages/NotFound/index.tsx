@@ -4,10 +4,14 @@ import { GenericHtml } from "../../components/GenericHtml";
 import { Heading } from "../../components/Heading";
 import { RouterLink } from "../../components/RouterLink";
 import { MainTemplate } from "../../templates/MainTemplate";
+import { showMessage } from "../../adapters/showMessage";
 
 export function NotFound() {
   useEffect(()=>{
         document.title="Página não encontrada - Chronos Pomodoro";
+        setTimeout(()=>{
+          showMessage.dismiss()
+        },0)
       },[])
   return (
     <MainTemplate>

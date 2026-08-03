@@ -9,8 +9,10 @@ import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { showMessage } from "../../adapters/showMessage";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskactions";
 
-
-const formErrors = [];
+ type FormErrorProps = {
+  mensage: string
+}
+const formErrors: FormErrorProps[] = [];
 
 export function Settings() {
   const { state, dispatch } = useTaskContext();
@@ -20,8 +22,10 @@ export function Settings() {
 
   useEffect(()=>{
         document.title="Configurações - Chronos Pomodoro";
+        setTimeout(()=>{
+          showMessage.dismiss()
+        }, 0)
       },[])
-
 
   function handleSaveSettings(e: React.SubmitEvent<HTMLFormElement>){
     e.preventDefault()
@@ -31,22 +35,22 @@ export function Settings() {
     const longBreakTime = Number(longBreakTimeInputRef.current?.value); 
 
     if(isNaN(workTime) || isNaN(shortBreakTime) || isNaN(longBreakTime)){
-      formErrors.push("Digite apenas números!");
+      formErrors.push({mensage: "Digite apenas números!"});
     }
 
     if(workTime < 1 || workTime > 99){
-      formErrors.push("Digite valores entre 1 e 99 para FOCO");
+      formErrors.push({mensage: "Digite valores entre 1 e 99 para FOCO"});
     } 
     if(shortBreakTime < 1 || shortBreakTime > 30){
-      formErrors.push("Digite valores entre 1 e 30 para DESCANSO CURTO");
+      formErrors.push({mensage: "Digite valores entre 1 e 30 para DESCANSO CURTO"});
     }
     if(longBreakTime < 1 || longBreakTime > 60){
-      formErrors.push("Digite valores entre 1 e 60 para DESCANSO LONGO");
+      formErrors.push({mensage: "Digite valores entre 1 e 60 para DESCANSO LONGO"});
     }
 
     if(formErrors.length > 0){
-      formErrors.forEach(error => {
-        showMessage.error(error)
+      formErrors.forEach((error) => {
+        showMessage.error(error.mensage)
       });
       return;
     }

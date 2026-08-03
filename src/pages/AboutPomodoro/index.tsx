@@ -4,10 +4,14 @@ import { GenericHtml } from "../../components/GenericHtml";
 import { Heading } from "../../components/Heading";
 import { RouterLink } from "../../components/RouterLink";
 import { MainTemplate } from "../../templates/MainTemplate";
+import { showMessage } from "../../adapters/showMessage";
 
 export function AboutPomodoro() {
   useEffect(()=>{
     document.title="Entenda a Técnica Pomodoro -Chronos Pomodoro";
+    setTimeout(()=>{
+      showMessage.dismiss()
+    }, 0)
   },[])
 
   return (
@@ -22,7 +26,6 @@ export function AboutPomodoro() {
             com pausas. O objetivo é manter o foco total por um período curto e
             garantir descansos para evitar o cansaço mental.
           </p>
-          <img src="https://placehold.co/1920x1080" alt="" />
           <h2>Como funciona o Pomodoro tradicional?</h2>
           <ul>
             <li>
